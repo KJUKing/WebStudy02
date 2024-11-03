@@ -1,6 +1,6 @@
 package kr.or.ddit.props.service;
 
-import kr.or.ddit.props.PersonVO;
+import kr.or.ddit.vo.PersonVO;
 import kr.or.ddit.props.dao.PersonDAO;
 import kr.or.ddit.props.dao.PersonDAOImplV0;
 import kr.or.ddit.props.exception.PersonNotFoundException;
@@ -40,7 +40,6 @@ public class PersonServiceImpl implements PersonService{
 
     @Override
     public List<PersonVO> readPersonList() {
-
         return dao.selectPersonList();
     }
 
@@ -51,6 +50,6 @@ public class PersonServiceImpl implements PersonService{
 
     @Override
     public boolean removePerson(String id) {
-        return false;
+        return dao.deletePerson(id) > 0;
     }
 }

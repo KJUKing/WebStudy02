@@ -1,4 +1,4 @@
-package kr.or.ddit.props;
+package kr.or.ddit.vo;
 
 import java.io.Serializable;
 import java.util.Objects;

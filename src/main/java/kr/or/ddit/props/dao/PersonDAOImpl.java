@@ -1,32 +1,55 @@
 package kr.or.ddit.props.dao;
 
-import kr.or.ddit.props.PersonVO;
-
+import kr.or.ddit.vo.PersonVO;
+import kr.or.ddit.mybatis.CustomSqlSessionFactoryBuilder;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
 import java.util.List;
 
 public class PersonDAOImpl implements PersonDAO {
+
+    private SqlSessionFactory sqlSessionFactory =
+            CustomSqlSessionFactoryBuilder.getSqlSessionFactory();
+
     @Override
     public int insertPerson(PersonVO person) {
-        return 0;
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
+            PersonDAO mapperProxy = sqlSession.getMapper(PersonDAO.class);
+            int cnt = mapperProxy.insertPerson(person);
+            if (cnt > 0) sqlSession.commit();
+            return cnt;
+        }
     }
 
     @Override
     public PersonVO selectPerson(String id) {
-        return null;
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
+            return sqlSession.getMapper(PersonDAO.class).selectPerson(id);
+        }
     }
 
     @Override
     public List<PersonVO> selectPersonList() {
-        return List.of();
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
+            return sqlSession.getMapper(PersonDAO.class).selectPersonList();
+        }
     }
 
     @Override
     public int updatePerson(PersonVO person) {
-        return 0;
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
+            int cnt = sqlSession.getMapper(PersonDAO.class).updatePerson(person);
+            if (cnt > 0) sqlSession.commit();
+            return cnt;
+        }
     }
 
     @Override
     public int deletePerson(String id) {
-        return 0;
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
+            int cnt = sqlSession.getMapper(PersonDAO.class).deletePerson(id);
+            if (cnt > 0) sqlSession.commit();
+            return cnt;
+        }
     }
 }
