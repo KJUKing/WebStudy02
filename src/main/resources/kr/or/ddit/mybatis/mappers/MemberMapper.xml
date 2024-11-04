@@ -29,7 +29,9 @@
                 , MEM_NAME
                 , MEM_MAIL
                 , MEM_HP
-            , MEM_ROLE
+                , MEM_ROLE
+                , MEM_ADD1
+                , MEM_MILEAGE
         FROM MEMBER
     </select>
 
@@ -39,7 +41,6 @@
                            , MEM_NAME
                            , MEM_REGNO1
                            , MEM_REGNO2
-                           , MEM_BIR
                            , MEM_ZIP
                            , MEM_ADD1
                            , MEM_ADD2
@@ -50,16 +51,12 @@
                            , MEM_JOB
                            , MEM_LIKE
                            , MEM_MEMORIAL
-                           , MEM_MEMORIALDAY
-                           , MEM_MILEAGE
-                           , MEM_DELETE
-                           , MEM_ROLE)
+                            )
         VALUES ( #{memId}
                , #{memPass}
                , #{memName}
                , #{memRegno1}
                , #{memRegno2}
-               , #{memBir}
                , #{memZip}
                , #{memAdd1}
                , #{memAdd2}
@@ -69,11 +66,7 @@
                , #{memMail}
                , #{memJob}
                , #{memLike}
-               , #{memMemorial}
-               , #{memMemorialday}
-               , #{memMileage}
-               , #{memDelete}
-               , #{memRole})
+               , #{memMemorial})
     </insert>
 
 

@@ -1,6 +1,9 @@
 // person.js
 // 전체적으로 스크립트 구간은 gpt에게 많이물어봤음
 // 반드시 리뷰다시한번 해야함
+// 현재 페이지의 경로에서 컨텍스트 패스 추출
+
+
 document.addEventListener('DOMContentLoaded', function () {
     loadPersonList();
 
@@ -18,11 +21,12 @@ document.addEventListener('DOMContentLoaded', function () {
         addPerson(personData);
     });
 });
+var contextPath = window.location.pathname.substring(0, window.location.pathname.indexOf('/', 1));
 
 // Person 목록 로드
 function loadPersonList() {
     //전부조회하는거임
-    fetch('/person')
+    fetch(contextPath + '/person')
         .then(response => response.json())
         .then(data => {
             populatePersonTable(data);
@@ -56,7 +60,7 @@ function populatePersonTable(personList) {
 
 // 새로운 Person 추가
 function addPerson(personData) {
-    fetch('/person', {
+    fetch(contextPath + '/person', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -80,7 +84,7 @@ function addPerson(personData) {
 
 // Person 삭제
 function deletePerson(id) {
-    fetch(`/person/${id}`, {
+    fetch(contextPath + `/person/${id}`, {
         method: 'DELETE'
     })
         .then(response => {

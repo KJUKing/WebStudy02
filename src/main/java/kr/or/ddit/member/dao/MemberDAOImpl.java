@@ -20,10 +20,10 @@ public class MemberDAOImpl implements MemberDAO {
         try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             MemberDAO mapperProxy = sqlSession.getMapper(MemberDAO.class);
             int cnt = mapperProxy.insertMember(member);
-
             if (cnt > 0) {
                 sqlSession.commit();
             }
+            System.out.println("나 콘솔찍혔는지 다오확인용");
             return cnt;
         }
     }

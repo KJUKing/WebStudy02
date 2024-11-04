@@ -4,6 +4,21 @@
   <welcome-file-list>
     <welcome-file>index.jsp</welcome-file>
   </welcome-file-list>
+
+<!--  1. 서버가 구동되면, /WEB-INF/tiles.xml 설정파일의 모든 definition들을 로딩해서 Tiles엔진을 구동시킴-->
+  <listener>
+    <listener-class>org.apache.tiles.web.startup.simple.SimpleTilesListener</listener-class>
+  </listener>
+<!--  2. 컨트롤러에서 logical view name이 결정되고, .tiles 확장자로 forwarding을 할때,
+      해당 요청을 수신하기 위한 서블릿-->
+  <servlet>
+    <servlet-name>Tiles Dispatch Servlet</servlet-name>
+    <servlet-class>org.apache.tiles.web.util.TilesDispatchServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Tiles Dispatch Servlet</servlet-name>
+    <url-pattern>*.tiles</url-pattern>
+  </servlet-mapping>
 <!--  filter  chain-->
   <filter>
     <filter-name>CharacterEncodingFilter</filter-name>
