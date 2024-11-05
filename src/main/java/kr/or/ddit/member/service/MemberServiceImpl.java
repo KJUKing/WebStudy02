@@ -12,21 +12,18 @@ import java.util.Optional;
 public class MemberServiceImpl implements MemberService{
 
     private MemberDAO dao = new MemberDAOImpl();
+    private AuthenticateService authService = new AuthenticateServiceImpl();
 
     @Override
     public ServiceResult createMember(MemberVO member) {
-        MemberVO searchMember = dao.selectMember(member.getMemId());
-        if (searchMember != null) {
-            return ServiceResult.PKDUPLICATED;
-        }
-        int i = dao.insertMember(member);
-        if (i > 0) {
-            return ServiceResult.OK;
+        ServiceResult result = null;
+        if (dao.selectMember(member.getMemId()) == null) {
+            int rowcnt = dao.insertMember(member);
+            result = rowcnt > 0 ? ServiceResult.OK : ServiceResult.FAIL;
         } else {
-            return ServiceResult.FAIL;
+            result = ServiceResult.PKDUPLICATED;
         }
-
-
+        return result;
     }
 
     @Override
@@ -42,11 +39,25 @@ public class MemberServiceImpl implements MemberService{
 
     @Override
     public ServiceResult modifyMember(MemberVO member) {
-        return null;
+        ServiceResult result = null;
+        if (authService.authenticate(member) != null) {
+            result = dao.update(member) > 0 ? ServiceResult.OK : ServiceResult.FAIL;
+        } else {
+            result = ServiceResult.INVALIDPASSWORD;
+        }
+        return result;
     }
 
     @Override
     public ServiceResult removeMember(MemberVO member) {
-        return null;
+        ServiceResult result = null;
+        //다르게온 멤버정보의 2차인증으로 온 비밀번호를 다르게 입력받고 검증해야하는데
+        //getUserPrinciple 로 뽑아낸 비밀번호는 사용자가 입력하지도않아도 당연하게 정답이되는문제가있다.
+        if (authService.authenticate(member) != null) {
+            result = dao.delete(member.getMemId()) > 0 ? ServiceResult.OK : ServiceResult.FAIL;
+        } else {
+            result = ServiceResult.INVALIDPASSWORD;
+        }
+        return result;
     }
 }

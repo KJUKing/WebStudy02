@@ -4,7 +4,7 @@
     <properties resource="kr/or/ddit/db/DBInfo.properties"/>
     <settings>
         <setting name="mapUnderscoreToCamelCase" value="true"/>
-        <setting name="jdbcTypeForNull" value="VARCHAR"/>
+<!--        <setting name="jdbcTypeForNull" value="VARCHAR"/>-->
     </settings>
     <typeAliases>
         <package name="kr.or.ddit.vo"/>

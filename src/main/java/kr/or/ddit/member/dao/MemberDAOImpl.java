@@ -2,6 +2,7 @@ package kr.or.ddit.member.dao;
 
 import kr.or.ddit.mybatis.CustomSqlSessionFactoryBuilder;
 import kr.or.ddit.vo.MemberVO;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 
@@ -55,11 +56,22 @@ public class MemberDAOImpl implements MemberDAO {
 
     @Override
     public int update(MemberVO member) {
-        return 0;
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
+            MemberDAO mapperProxy = sqlSession.getMapper(MemberDAO.class);
+            int cnt = mapperProxy.update(member);
+            if (cnt > 0) sqlSession.commit();
+            return cnt;
+        }
     }
 
     @Override
-    public int delete(String memId) {
-        return 0;
+    public int delete(@Param("memId") String memId) {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
+            MemberDAO mapperProxy = sqlSession.getMapper(MemberDAO.class);
+            int cnt = mapperProxy.delete(memId);
+            if (cnt > 0) sqlSession.commit();
+            return cnt;
+        }
+
     }
 }

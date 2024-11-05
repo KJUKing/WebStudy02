@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<form method="post" enctype="application/x-www-form-urlencoded">
+<form method="post">
     <table class="table">
         <tr>
             <th>회원아이디</th>
@@ -27,12 +27,12 @@
         </tr>
         <tr>
             <th>주민번호 1</th>
-            <td><input type="text" name="memRegno1" class="form-control" value="${member.memRegno1}"/><span
+            <td><input type="text" name="memRegno1" class="form-control" readonly value="${member.memRegno1}"/><span
                     class="text-danger">${errors.memRegno1 }</span></td>
         </tr>
         <tr>
             <th>주민번호 2</th>
-            <td><input type="text" name="memRegno2" class="form-control" value="${member.memRegno2}"/><span
+            <td><input type="text" name="memRegno2" class="form-control" readonly value="${member.memRegno2}"/><span
                     class="text-danger">${errors.memRegno2 }</span></td>
         </tr>
         <tr>
@@ -94,6 +94,10 @@
             <th>기념일자</th>
             <td><input type="date" name="memMemorialday" class="form-control" value="${member.memMemorialday}" disabled/><span
                     class="text-danger">${errors.memMemorialday }</span></td>
+        </tr>
+        <tr>
+            <td>마일리지 </td>
+            <td>${member.memMileage }</td>
         </tr>
         <tr>
             <td colspan="2">

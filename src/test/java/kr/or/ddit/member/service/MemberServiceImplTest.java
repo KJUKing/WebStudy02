@@ -1,5 +1,6 @@
 package kr.or.ddit.member.service;
 
+import kr.or.ddit.member.commons.enumpkg.ServiceResult;
 import kr.or.ddit.member.commons.exception.PKNotFoundException;
 import kr.or.ddit.member.dao.MemberDAO;
 import kr.or.ddit.member.dao.MemberDAOImpl;

@@ -7,6 +7,12 @@
     <meta charset="UTF-8">
     <title>tilesLayout.jsp</title>
     <tiles:insertAttribute name="preScript"/>
+    <c:if test="${not empty message}">
+        <script type="text/javascript">
+            alert("${message}}")
+        </script>
+    </c:if>
+    <c:remove var="message" scope="session"/>
 </head>
 <body>
 <h1>타일즈 레이아웃 동작</h1>
