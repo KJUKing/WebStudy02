@@ -1,10 +1,8 @@
 package kr.or.ddit.member.service;
 
-import kr.or.ddit.member.commons.enumpkg.ServiceResult;
-import kr.or.ddit.member.commons.exception.PKNotFoundException;
+import kr.or.ddit.commons.exception.PKNotFoundException;
 import kr.or.ddit.member.dao.MemberDAO;
 import kr.or.ddit.member.dao.MemberDAOImpl;
-import kr.or.ddit.vo.MemberVO;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

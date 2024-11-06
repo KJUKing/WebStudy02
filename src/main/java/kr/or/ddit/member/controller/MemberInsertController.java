@@ -1,11 +1,12 @@
 package kr.or.ddit.member.controller;
 
-import kr.or.ddit.member.commons.enumpkg.ServiceResult;
+import kr.or.ddit.commons.enumpkg.ServiceResult;
 import kr.or.ddit.member.service.MemberService;
 import kr.or.ddit.member.service.MemberServiceImpl;
+import kr.or.ddit.utils.ValidateUtils;
+import kr.or.ddit.validate.InsertGroup;
 import kr.or.ddit.vo.MemberVO;
 import org.apache.commons.beanutils.BeanUtils;
-import org.apache.commons.lang3.StringUtils;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @WebServlet("/member/memberInsert.do")
@@ -73,9 +75,9 @@ public class MemberInsertController extends HttpServlet {
         member.setMemLike(req.getParameter("memLike"));
         member.setMemMemorial(req.getParameter("memMemorial"));
 
-        Map<String, String> errors = new HashMap<String, String>();
+        Map<String, List<String>> errors = new HashMap<>();
         req.setAttribute("errors", errors);
-        validate(member, errors);
+        ValidateUtils.validate(member, errors, InsertGroup.class);
         String lvn = null;
         if (errors.isEmpty()) {
             ServiceResult result = service.createMember(member);
@@ -104,43 +106,5 @@ public class MemberInsertController extends HttpServlet {
         }
     }
 
-    private void validate(MemberVO member, Map<String, String> errors) {
-        boolean valid = true;
-
-        if (StringUtils.isBlank(member.getMemId())) {
-            valid = false;
-            errors.put("memId", "아이디 누락");
-        }
-
-        if (StringUtils.isBlank(member.getMemPass())) {
-            valid = false;
-            errors.put("password", "패스워드 누락");
-        }
-
-        if (StringUtils.isBlank(member.getMemName())) {
-            valid = false;
-            errors.put("name", "이름 누락");
-        }
-
-        if (StringUtils.isBlank(member.getMemZip())) {
-            valid = false;
-            errors.put("zip", "우편번호 누락");
-        }
-
-        if (StringUtils.isBlank(member.getMemAdd1())) {
-            valid = false;
-            errors.put("Address", "주소1 누락");
-        }
-
-        if (StringUtils.isBlank(member.getMemAdd2())) {
-            valid = false;
-            errors.put("Address2", "상세주소 누락");
-        }
-
-        if (StringUtils.isBlank(member.getMemMail())) {
-            valid = false;
-            errors.put("mail", "메일 누락");
-        }
-    }
 }
 

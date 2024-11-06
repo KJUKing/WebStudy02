@@ -1,6 +1,6 @@
 package kr.or.ddit.member.controller;
 
-import kr.or.ddit.member.commons.enumpkg.ServiceResult;
+import kr.or.ddit.commons.enumpkg.ServiceResult;
 import kr.or.ddit.member.service.MemberService;
 import kr.or.ddit.member.service.MemberServiceImpl;
 import kr.or.ddit.vo.MemberVO;
@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.security.Principal;
 
 @WebServlet("/member/memberDelete.do")
 public class MemberDeleteController extends HttpServlet {
