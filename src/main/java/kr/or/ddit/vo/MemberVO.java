@@ -3,6 +3,7 @@ package kr.or.ddit.vo;
 import kr.or.ddit.validate.DeleteGroup;
 import kr.or.ddit.validate.InsertGroup;
 import kr.or.ddit.validate.UpdateGroup;
+import kr.or.ddit.validate.constraint.TelephoneNumber;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -47,7 +48,8 @@ public class MemberVO implements Serializable {
     @NotBlank
     private String memAdd2;
 
-    @Pattern(regexp = "\\d{2,3}-\\d{3,4}-\\d{4}")
+//    @Pattern(regexp = "\\d{2,3}-\\d{3,4}-\\d{4}")
+    @TelephoneNumber
     private String memHometel;
     @Pattern(regexp = "\\d{2,3}-\\d{3,4}-\\d{4}")
     private String memComtel;

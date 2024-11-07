@@ -12,17 +12,17 @@
     <table class="table">
         <tr>
             <th>회원아이디</th>
-            <td><input type="text" name="memId" class="form-control" required value="${member.memId}"/><span
+            <td><input type="text" name="memId" class="form-control"  value="${member.memId}"/><span
                     class="text-danger">${errors.memId }</span></td>
         </tr>
         <tr>
             <th>비빌번호</th>
-            <td><input type="text" name="memPass" class="form-control" required value="${member.memPass}"/><span
+            <td><input type="text" name="memPass" class="form-control"  value="${member.memPass}"/><span
                     class="text-danger">${errors.memPass }</span></td>
         </tr>
         <tr>
             <th>이름</th>
-            <td><input type="text" name="memName" class="form-control" required value="${member.memName}"/><span
+            <td><input type="text" name="memName" class="form-control"  value="${member.memName}"/><span
                     class="text-danger">${errors.memName }</span></td>
         </tr>
         <tr>
@@ -42,17 +42,17 @@
         </tr>
         <tr>
             <th>우편번호</th>
-            <td><input type="text" name="memZip" class="form-control" required value="${member.memZip}"/><span
+            <td><input type="text" name="memZip" class="form-control"  value="${member.memZip}"/><span
                     class="text-danger">${errors.memZip }</span></td>
         </tr>
         <tr>
             <th>주소1</th>
-            <td><input type="text" name="memAdd1" class="form-control" required value="${member.memAdd1}"/><span
+            <td><input type="text" name="memAdd1" class="form-control"  value="${member.memAdd1}"/><span
                     class="text-danger">${errors.memAdd1 }</span></td>
         </tr>
         <tr>
             <th>주소2</th>
-            <td><input type="text" name="memAdd2" class="form-control" required value="${member.memAdd2}"/><span
+            <td><input type="text" name="memAdd2" class="form-control"  value="${member.memAdd2}"/><span
                     class="text-danger">${errors.memAdd2 }</span></td>
         </tr>
         <tr>
@@ -72,7 +72,7 @@
         </tr>
         <tr>
             <th>이메일</th>
-            <td><input type="text" name="memMail" class="form-control" required value="${member.memMail}"/><span
+            <td><input type="text" name="memMail" class="form-control"  value="${member.memMail}"/><span
                     class="text-danger">${errors.memMail }</span></td>
         </tr>
         <tr>
