@@ -1,6 +1,7 @@
 package kr.or.ddit.vo;
 
 import lombok.Data;
+import org.apache.logging.log4j.core.config.plugins.validation.constraints.NotBlank;
 
 import java.io.Serializable;
 import java.util.List;
@@ -8,8 +9,11 @@ import java.util.List;
 @Data
 public class BuyerVO implements Serializable {
 
+    @NotBlank
     private String buyerId;
+    @NotBlank
     private String buyerName;
+    @NotBlank
     private String buyerLgu;
     private String buyerBank;
     private String buyerBankno;
