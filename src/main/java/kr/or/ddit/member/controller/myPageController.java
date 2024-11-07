@@ -3,6 +3,7 @@ package kr.or.ddit.member.controller;
 import kr.or.ddit.login.auth.MemberVOWrapper;
 import kr.or.ddit.member.service.MemberService;
 import kr.or.ddit.member.service.MemberServiceImpl;
+import kr.or.ddit.mvc.ViewResolverComposite;
 import kr.or.ddit.vo.MemberVO;
 
 import javax.servlet.ServletException;
@@ -28,6 +29,6 @@ public class myPageController extends HttpServlet {
 
         String lvn = "member/memberDetail";
 
-        req.getRequestDispatcher("/"+lvn+".tiles").forward(req, resp);
+        new ViewResolverComposite().resolveView(lvn, req, resp);
     }
 }

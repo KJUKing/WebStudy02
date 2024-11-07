@@ -2,6 +2,7 @@ package kr.or.ddit.member.controller;
 
 import kr.or.ddit.member.service.MemberService;
 import kr.or.ddit.member.service.MemberServiceImpl;
+import kr.or.ddit.mvc.ViewResolverComposite;
 import kr.or.ddit.vo.MemberVO;
 import org.apache.commons.lang3.StringUtils;
 
@@ -31,6 +32,8 @@ public class MemberDetailController extends HttpServlet {
         MemberVO member = service.readMember(memId);
 
         req.setAttribute("member", member);
-        req.getRequestDispatcher("/member/memberDetail.tiles").forward(req, resp);
+        String lvn = "member/memberDetail";
+
+        new ViewResolverComposite().resolveView(lvn, req, resp);
     }
 }

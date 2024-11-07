@@ -1,45 +1,46 @@
 package kr.or.ddit.vo;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
+import java.io.Serializable;
+import java.time.LocalDate;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.io.Serializable;
-import java.time.LocalDate;
-import java.util.List;
+
+import kr.or.ddit.validate.UpdateGroup;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 @Data
 @EqualsAndHashCode(of = "prodId")
-@ToString()
-public class ProdVO implements Serializable {
-    @NotBlank
+@ToString
+public class ProdVO implements Serializable{
+    @NotBlank(groups = UpdateGroup.class)
     private String prodId;
     @NotBlank
     private String prodName;
-    @Size(min = 4, max = 4)
     @NotBlank
+    @Size(min=4, max=4)
     private String prodLgu;
     @NotBlank
-    @Size(min = 6, max = 6)
+    @Size(min=6, max=6)
     private String prodBuyer;
-    @Min(0)
     @NotNull
+    @Min(0)
     private Long prodCost;
-    @Min(0)
     @NotNull
+    @Min(0)
     private Long prodPrice;
-    @Min(0)
     @NotNull
+    @Min(0)
     private Long prodSale;
     @NotBlank
     private String prodOutline;
     @ToString.Exclude
     private String prodDetail;
-    @NotBlank
+    //	@NotBlank
     private String prodImg;
     @NotNull
     private Long prodTotalstock;
@@ -54,10 +55,18 @@ public class ProdVO implements Serializable {
     private Long prodQtysale;
     private Long prodMileage;
 
-    private LprodVO lprod; // Has A 이경우에는 ProdVO Has A LprodVO (1:1)
-    private BuyerVO buyer; // Has A 이경우에는 ProdVO Has A BuyerVO (1:1)
-
-
-
-
+    private LprodVO lprod; // ProdVO Has A LprodVO (1:1)
+    private BuyerVO buyer; // ProdVO Has A BuyerVO (1:1)
 }
+
+
+
+
+
+
+
+
+
+
+
+

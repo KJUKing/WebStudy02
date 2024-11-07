@@ -1,5 +1,7 @@
 package kr.or.ddit.prod.dao;
 
+import kr.or.ddit.vo.BuyerVO;
+import kr.or.ddit.vo.LprodVO;
 import kr.or.ddit.vo.ProdVO;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
@@ -15,6 +17,11 @@ class ProdMapperImplTest {
 
     @Test
     void insertProd() {
+        ProdVO prod = dao.selectProd("P101000001");
+        prod.setProdLgu("P999");
+
+        int i = dao.insertProd(prod);
+        assertEquals(i, 1);
     }
 
     @Test

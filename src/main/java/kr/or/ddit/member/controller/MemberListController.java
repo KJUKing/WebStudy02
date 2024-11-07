@@ -2,6 +2,8 @@ package kr.or.ddit.member.controller;
 
 import kr.or.ddit.member.service.MemberService;
 import kr.or.ddit.member.service.MemberServiceImpl;
+import kr.or.ddit.mvc.ViewResolver;
+import kr.or.ddit.mvc.ViewResolverComposite;
 import kr.or.ddit.vo.MemberVO;
 
 import javax.servlet.ServletException;
@@ -30,6 +32,9 @@ public class MemberListController extends HttpServlet {
         
         req.setAttribute("list", memberList);
 
-        req.getRequestDispatcher("/member/memberList.tiles").forward(req, resp);
+        String lvn = "member/memberList";
+
+        new ViewResolverComposite().resolveView(lvn, req, resp);
+
     }
 }

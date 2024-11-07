@@ -37,7 +37,7 @@
         </tr>
         <tr>
             <th>생일</th>
-            <td><input type="date" name="memBir" class="form-control" value="${member.memBir}" disabled/><span
+            <td><input type="date" name="memBir" class="form-control" value="${member.memBir}" /><span
                     class="text-danger">${errors.memBir }</span></td>
         </tr>
         <tr>
@@ -92,7 +92,7 @@
         </tr>
         <tr>
             <th>기념일자</th>
-            <td><input type="date" name="memMemorialday" class="form-control" value="${member.memMemorialday}" disabled/><span
+            <td><input type="date" name="memMemorialday" class="form-control" value="${member.memMemorialday}" /><span
                     class="text-danger">${errors.memMemorialday }</span></td>
         </tr>
         <tr>

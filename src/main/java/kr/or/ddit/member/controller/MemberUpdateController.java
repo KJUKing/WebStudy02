@@ -5,6 +5,8 @@ import kr.or.ddit.member.service.AuthenticateService;
 import kr.or.ddit.member.service.AuthenticateServiceImpl;
 import kr.or.ddit.member.service.MemberService;
 import kr.or.ddit.member.service.MemberServiceImpl;
+import kr.or.ddit.mvc.ViewResolverComposite;
+import kr.or.ddit.utils.PopulateUtils;
 import kr.or.ddit.utils.ValidateUtils;
 import kr.or.ddit.validate.UpdateGroup;
 import kr.or.ddit.vo.MemberVO;
@@ -57,11 +59,7 @@ public class MemberUpdateController extends HttpServlet {
 
         MemberVO member = new MemberVO();
         req.setAttribute("member", member);
-        try {
-            BeanUtils.populate(member, req.getParameterMap());
-        } catch (IllegalAccessException | InvocationTargetException e) {
-            throw new ServletException(e);
-        }
+        PopulateUtils.populate(member, req.getParameterMap());
 
         Map<String, List<String>> errors = new HashMap<>();
         req.setAttribute("errors", errors);
@@ -86,13 +84,7 @@ public class MemberUpdateController extends HttpServlet {
         } else {
             lvn = "member/memberUpdateForm";
         }
-
-        if (lvn.startsWith("redirect:")) {
-            String location = lvn.replace("redirect:", req.getContextPath());
-            resp.sendRedirect(location);
-        } else {
-            req.getRequestDispatcher("/" +lvn+".tiles").forward(req, resp);
-        }
+        new ViewResolverComposite().resolveView(lvn, req, resp);
 
     }
 

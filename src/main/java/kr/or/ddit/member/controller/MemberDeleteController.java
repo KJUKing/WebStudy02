@@ -3,6 +3,7 @@ package kr.or.ddit.member.controller;
 import kr.or.ddit.commons.enumpkg.ServiceResult;
 import kr.or.ddit.member.service.MemberService;
 import kr.or.ddit.member.service.MemberServiceImpl;
+import kr.or.ddit.mvc.ViewResolverComposite;
 import kr.or.ddit.vo.MemberVO;
 import org.apache.commons.lang3.StringUtils;
 
@@ -51,13 +52,7 @@ public class MemberDeleteController extends HttpServlet {
                     break;
             }
         }
-        if (lvn.startsWith("redirect:")) {
-            String location = lvn.replace("redirect:", req.getContextPath());
-            resp.sendRedirect(location);
-        } else {
-            req.getRequestDispatcher("/" + lvn + ".tiles").forward(req, resp);
-        }
-        ServiceResult result = service.removeMember(member);
+        new ViewResolverComposite().resolveView(lvn, req, resp);
     }
 }
 

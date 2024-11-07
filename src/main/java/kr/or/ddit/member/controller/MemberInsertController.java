@@ -3,6 +3,8 @@ package kr.or.ddit.member.controller;
 import kr.or.ddit.commons.enumpkg.ServiceResult;
 import kr.or.ddit.member.service.MemberService;
 import kr.or.ddit.member.service.MemberServiceImpl;
+import kr.or.ddit.mvc.ViewResolverComposite;
+import kr.or.ddit.utils.PopulateUtils;
 import kr.or.ddit.utils.ValidateUtils;
 import kr.or.ddit.validate.InsertGroup;
 import kr.or.ddit.vo.MemberVO;
@@ -28,12 +30,8 @@ public class MemberInsertController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         String lvn = "member/memberForm";
-        if (lvn.startsWith("redirect:")) {
-            String location = lvn.replace("redirect:", req.getContextPath());
-            resp.sendRedirect(location);
-        } else {
-            req.getRequestDispatcher("/" +lvn+".tiles").forward(req, resp);
-        }
+
+        new ViewResolverComposite().resolveView(lvn, req, resp);
     }
 
     @Override
@@ -52,28 +50,8 @@ public class MemberInsertController extends HttpServlet {
 
         MemberVO member = new MemberVO();
         req.setAttribute("member", member);
-        try {
-            BeanUtils.populate(member, req.getParameterMap());
-        } catch (IllegalAccessException | InvocationTargetException e) {
-            throw new ServletException(e);
-        }
+        PopulateUtils.populate(member, req.getParameterMap());
 
-
-        member.setMemId(req.getParameter("memId"));
-        member.setMemPass(req.getParameter("memPass"));
-        member.setMemName(req.getParameter("memName"));
-        member.setMemRegno1(req.getParameter("memRegno1"));
-        member.setMemRegno2(req.getParameter("memRegno2"));
-        member.setMemZip(req.getParameter("memZip"));
-        member.setMemAdd1(req.getParameter("memAdd1"));
-        member.setMemAdd2(req.getParameter("memAdd2"));
-        member.setMemHometel(req.getParameter("memHometel"));
-        member.setMemComtel(req.getParameter("memComtel"));
-        member.setMemHp(req.getParameter("memHp"));
-        member.setMemMail(req.getParameter("memMail"));
-        member.setMemJob(req.getParameter("memJob"));
-        member.setMemLike(req.getParameter("memLike"));
-        member.setMemMemorial(req.getParameter("memMemorial"));
 
         Map<String, List<String>> errors = new HashMap<>();
         req.setAttribute("errors", errors);
@@ -98,12 +76,8 @@ public class MemberInsertController extends HttpServlet {
             lvn = "member/memberForm";
         }
 
-        if (lvn.startsWith("redirect:")) {
-            String location = lvn.replace("redirect:", req.getContextPath());
-            resp.sendRedirect(location);
-        } else {
-            req.getRequestDispatcher("/" +lvn+".tiles").forward(req, resp);
-        }
+        new ViewResolverComposite().resolveView(lvn, req, resp);
+
     }
 
 }

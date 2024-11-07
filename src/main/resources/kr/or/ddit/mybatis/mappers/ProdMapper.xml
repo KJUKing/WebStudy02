@@ -1,47 +1,112 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.or.ddit.prod.dao.ProdMapper">
-
     <sql id="fromFrag">
-        FROM PROD P
-                 INNER JOIN LPROD L ON P.PROD_LGU = L.LPROD_GU
-                 INNER JOIN BUYER B ON P.PROD_BUYER = B.BUYER_ID
+        FROM PROD INNER JOIN LPROD ON (PROD_LGU = LPROD_GU)
+				INNER JOIN BUYER ON (PROD_BUYER = BUYER_ID)
     </sql>
-    <resultMap id="prodListMap" type="prodVO" autoMapping="true">
-        <association property="lprod" javaType="LprodVO" autoMapping="true">
-<!--            <result property="lprodNm" column="LPROD_NM"/>-->
-        </association>
-        <association property="buyer" javaType="BuyerVO" autoMapping="true"/>
+    <resultMap type="ProdVO" id="prodListMap" autoMapping="true">
+        <association property="lprod" javaType="LprodVO" autoMapping="true" />
+        <association property="buyer" javaType="BuyerVO" autoMapping="true" />
     </resultMap>
-    <!--    다건 조회-->
     <select id="selectProdList" resultMap="prodListMap">
-        SELECT P.PROD_ID AS PROD_ID
-             , P.PROD_NAME AS PROD_NAME
-             , P.PROD_LGU AS PROD_LGU
-             , L.LPROD_NM AS LPROD_NM
-             , P.PROD_BUYER AS PROD_BUYER
-             , B.BUYER_NAME AS BUYER_NAME
-             , P.PROD_COST AS PROD_COST
-             , P.PROD_PRICE AS PROD_PRICE
-             , P.PROD_INSDATE AS PROD_INSDATE
-             , B.BUYER_ADD1 AS BUYER_ADD1
-        <include refid="fromFrag"></include>
+        SELECT
+        PROD_ID
+        , PROD_NAME
+        , PROD_LGU
+        , PROD_BUYER
+        , PROD_COST
+        , PROD_PRICE
+        , PROD_INSDATE
+        , LPROD_NM
+        , BUYER_NAME
+        <include refid="fromFrag" />
     </select>
-
     <select id="selectProd" resultMap="prodListMap">
-        SELECT P.PROD_ID AS PROD_ID
-             , P.PROD_NAME AS PROD_NAME
-             , P.PROD_LGU AS PROD_LGU
-             , L.LPROD_NM AS LPROD_NM
-             , P.PROD_BUYER AS PROD_BUYER
-             , B.BUYER_NAME AS BUYER_NAME
-             , P.PROD_COST AS PROD_COST
-             , P.PROD_PRICE AS PROD_PRICE
-             , P.PROD_INSDATE AS PROD_INSDATE
-             , B.BUYER_ADD1 AS BUYER_ADD1
-        <include refid="fromFrag"/>
+        SELECT
+        PROD_ID
+        , PROD_NAME
+        , PROD_LGU
+        , PROD_BUYER
+        , PROD_COST
+        , PROD_PRICE
+        , PROD_SALE
+        , PROD_OUTLINE
+        , PROD_DETAIL
+        , PROD_IMG
+        , PROD_TOTALSTOCK
+        , PROD_INSDATE
+        , PROD_PROPERSTOCK
+        , PROD_SIZE
+        , PROD_COLOR
+        , PROD_DELIVERY
+        , PROD_UNIT
+        , PROD_QTYIN
+        , PROD_QTYSALE
+        , PROD_MILEAGE
+        , LPROD_GU , LPROD_NM
+        , BUYER_ID , BUYER_NAME
+        <include refid="fromFrag" />
         WHERE PROD_ID = #{prodId}
     </select>
-
-
+    <insert id="insertProd">
+        <selectKey order="BEFORE" keyProperty="prodId" resultType="string">
+            SELECT #{prodLgu} ||
+            LPAD( NVL( TO_NUMBER( SUBSTR(MAX(PROD_ID), 5) ), 0) + 1, 6, '0')
+            FROM PROD
+            WHERE PROD_LGU = #{prodLgu}
+        </selectKey>
+        INSERT INTO PROD
+        (
+        PROD_ID
+        , PROD_NAME
+        , PROD_LGU
+        , PROD_BUYER
+        , PROD_COST
+        , PROD_PRICE
+        , PROD_SALE
+        , PROD_OUTLINE
+        , PROD_DETAIL
+        , PROD_IMG
+        , PROD_TOTALSTOCK
+        , PROD_INSDATE
+        , PROD_PROPERSTOCK
+        , PROD_SIZE
+        , PROD_COLOR
+        , PROD_DELIVERY
+        , PROD_UNIT
+        , PROD_QTYIN
+        , PROD_QTYSALE
+        , PROD_MILEAGE
+        )VALUES(
+        #{prodId,jdbcType=VARCHAR}
+        , #{prodName,jdbcType=VARCHAR}
+        , #{prodLgu,jdbcType=CHAR}
+        , #{prodBuyer,jdbcType=CHAR}
+        , #{prodCost,jdbcType=NUMERIC}
+        , #{prodPrice,jdbcType=NUMERIC}
+        , #{prodSale,jdbcType=NUMERIC}
+        , #{prodOutline,jdbcType=VARCHAR}
+        , #{prodDetail,jdbcType=CLOB}
+        , #{prodImg,jdbcType=VARCHAR}
+        , #{prodTotalstock,jdbcType=NUMERIC}
+        , #{prodInsdate,jdbcType=DATE}
+        , #{prodProperstock,jdbcType=NUMERIC}
+        , #{prodSize,jdbcType=VARCHAR}
+        , #{prodColor,jdbcType=VARCHAR}
+        , #{prodDelivery,jdbcType=VARCHAR}
+        , #{prodUnit,jdbcType=VARCHAR}
+        , #{prodQtyin,jdbcType=NUMERIC}
+        , #{prodQtysale,jdbcType=NUMERIC}
+        , #{prodMileage,jdbcType=NUMERIC}
+        )
+    </insert>
 </mapper>
+
+
+
+
+
+
+
+

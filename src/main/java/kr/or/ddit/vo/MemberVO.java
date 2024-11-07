@@ -12,6 +12,7 @@ import javax.validation.constraints.*;
 import javax.validation.groups.Default;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 /**
  * 회원관리용 Domain Layer
@@ -38,7 +39,7 @@ public class MemberVO implements Serializable {
     @ToString.Exclude
     @NotBlank(groups = InsertGroup.class)
     private transient String memRegno2;
-    private LocalDate memBir;
+    private LocalDateTime memBir;
     @NotBlank
     private String memZip;
     @NotBlank

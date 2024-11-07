@@ -1,8 +1,10 @@
 package kr.or.ddit.prod.controller;
 
+import kr.or.ddit.mvc.ViewResolverComposite;
 import kr.or.ddit.prod.service.ProdService;
 import kr.or.ddit.prod.service.ProdServiceImpl;
 import kr.or.ddit.vo.ProdVO;
+import org.apache.tiles.definition.NoSuchDefinitionException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -30,11 +32,6 @@ public class ProdListController extends HttpServlet {
 
         String lvn = "prod/prodList";
 
-        if (lvn.startsWith("redirect:")) {
-            String location = lvn.replace("redirect:", req.getContextPath());
-            resp.sendRedirect(location);
-        } else {
-            req.getRequestDispatcher("/" +lvn+".tiles").forward(req, resp);
-        }
+        new ViewResolverComposite().resolveView(lvn, req, resp);
     }
 }
