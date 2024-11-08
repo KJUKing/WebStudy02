@@ -1,6 +1,6 @@
 package kr.or.ddit.props.dao;
 
-import kr.or.ddit.vo.PersonVO;
+import kr.or.ddit.props.PersonVO;
 import kr.or.ddit.mybatis.CustomSqlSessionFactoryBuilder;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;

@@ -1,18 +1,27 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: PC-14
-  Date: 2024-11-04
-  Time: 오전 11:08
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+         pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
 
 <table class="table table-bordered">
+    <%-- 		<c:forEach items="${wrapper.keys }" var="key"> --%>
+    <!-- 			<tr>  -->
+    <%-- 				<th>${wrapper.comments(key) }</th> --%>
+    <%-- 				<td>${wrapper.vo[key] }</td> --%>
+    <!-- 			</tr> -->
+
+    <%-- 		</c:forEach> --%>
     <tr>
-        <th>회원아이디</th>
+        <th>프로필이미지</th>
+        <td>
+            <img src="data:image/*;base64,${member.base64Img }"/>
+        </td>
+    </tr>
+    <tr>
+        <th>역할</th>
+        <td>${member.memRole }</td>
+    </tr>
+    <tr>
+        <th>아이디</th>
         <td>${member.memId }</td>
     </tr>
     <tr>
@@ -20,11 +29,11 @@
         <td>${member.memName }</td>
     </tr>
     <tr>
-        <th>주민번호 1</th>
+        <th>주민번호1</th>
         <td>${member.memRegno1 }</td>
     </tr>
     <tr>
-        <th>주민번호 2</th>
+        <th>주민번호2</th>
         <td>${member.memRegno2 }</td>
     </tr>
     <tr>
@@ -44,11 +53,11 @@
         <td>${member.memAdd2 }</td>
     </tr>
     <tr>
-        <th>집전화번호</th>
+        <th>집전번</th>
         <td>${member.memHometel }</td>
     </tr>
     <tr>
-        <th>회사번호</th>
+        <th>회사전번</th>
         <td>${member.memComtel }</td>
     </tr>
     <tr>
@@ -83,42 +92,71 @@
         <th>탈퇴여부</th>
         <td>${member.memDelete }</td>
     </tr>
-    <tr>
-        <th>회원권한</th>
-        <td>${member.memRole }</td>
-    </tr>
-    <c:set value="${pageContext.request.userPrincipal}" var="userPrincipal"/>
-    <c:if test="${userPrincipal.name eq member.memId}">
-    <tr>
+    <c:set value="${pageContext.request.userPrincipal }" var="userPrincipal"/>
+    <c:if test="${userPrincipal.name eq member.memId }">
+        <tr>
             <td colspan="2">
-                    <a class="btn btn-primary" href="<c:url value='/member/memberUpdate.do'/>"> 수정</a>
-                    <button type="button" class="btn btn-danger"
-                            data-bs-toggle="modal" data-bs-target="#exampleModal">탈퇴</button>
+                <a class="btn btn-primary" href="<c:url value='/member/memberUpdate.do'/>">수정</a>
+                <button type="button" class="btn btn-danger"
+                        data-bs-toggle="modal" data-bs-target="#exampleModal">탈퇴</button>
             </td>
-    </tr>
+        </tr>
     </c:if>
-
+</table>
+<h4>구매기록</h4>
+<table>
+    <thead>
+    <tr>
+        <th>구매일</th>
+        <th>상품명</th>
+        <th>상품분류</th>
+        <th>제조사</th>
+        <th>구매수량</th>
+    </tr>
+    </thead>
+    <tbody>
+    <c:forEach items="${member.cartList }" var="cart">
+        <tr>
+            <td>${cart.cartDate }</td>
+            <td>${cart.prod.prodName }</td>
+            <td>${cart.prod.lprod.lprodNm }</td>
+            <td>${cart.prod.buyer.buyerName }</td>
+            <td>${cart.cartQty }</td>
+        </tr>
+    </c:forEach>
+    </tbody>
 </table>
 
-<c:if test="${userPrincipal.name eq member.memId}">
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+<c:if test="${userPrincipal.name eq member.memId }">
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form action="<c:url value='/member/memberDelete.do'/>" method="post">
+                    <div class="modal-body">
+                        <input type="password" name="memPass" class="form-control" required />
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-danger">탈퇴</button>
+                    </div>
+                </form>
             </div>
-            <form action="<c:url value="/member/memberDelete.do"/>" method="post">
-            <div class="modal-body">
-                <input type="password" name="memPass" class="form-control" required/>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-danger">탈퇴</button>
-            </div>
-            </form>
         </div>
     </div>
-</div>
 </c:if>
+
+
+
+
+
+
+
+
+
+
+

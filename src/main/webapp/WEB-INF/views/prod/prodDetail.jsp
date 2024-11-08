@@ -3,6 +3,14 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <table class="table table-bordered">
     <tr>
+        <td colspan="2">
+            <c:url value="/prod/prodUpdate.do" var="updateUrl">
+                <c:param name="what" value="${prod.prodId }"/>
+            </c:url>
+            <a class="btn btn-primary" href="${updateUrl }">상품수정</a>
+        </td>
+    </tr>
+    <tr>
         <th>상품명</th>
         <td>${prod.prodName }</td>
     </tr>

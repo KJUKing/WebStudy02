@@ -14,17 +14,16 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @WebServlet("/mypage")
-public class myPageController extends HttpServlet {
-
-    MemberService service = new MemberServiceImpl();
+public class MyPageController extends HttpServlet {
+    private MemberService service = new MemberServiceImpl();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
         MemberVOWrapper principal = (MemberVOWrapper) req.getUserPrincipal();
-//        MemberVO authMember = principal.getRealUser();
+        MemberVO authMember = principal.getRealUser();
 
         MemberVO member = service.readMember(principal.getName());
+//		req.setAttribute("wrapper", new WrapperVO<MemberVO>(member));
         req.setAttribute("member", member);
 
         String lvn = "member/memberDetail";

@@ -2,7 +2,7 @@ package kr.or.ddit.props.controller;
 
 import kr.or.ddit.props.service.PersonService;
 import kr.or.ddit.props.service.PersonServiceImpl;
-import kr.or.ddit.vo.PersonVO;
+import kr.or.ddit.props.PersonVO;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 

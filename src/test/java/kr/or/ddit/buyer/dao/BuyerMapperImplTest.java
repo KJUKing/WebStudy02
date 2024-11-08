@@ -1,23 +1,20 @@
 package kr.or.ddit.buyer.dao;
 
-import kr.or.ddit.vo.BuyerVO;
-import org.junit.jupiter.api.Test;
-
-import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.*;
 
+import org.junit.jupiter.api.Test;
+
+import kr.or.ddit.vo.BuyerVO;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 class BuyerMapperImplTest {
-
-    BuyerMapper buyerMapper = new BuyerMapperImpl();
-
-    @Test
-    void selectBuyer() {
-    }
+    BuyerMapper mapper = new BuyerMapperImpl();
 
     @Test
-    void selectBuyerList() {
-        List<BuyerVO> buyerVOS = buyerMapper.selectBuyerList();
-        assertNotNull(buyerVOS);
+    void testSelectBuyer() {
+        BuyerVO buyer = mapper.selectBuyer("P10101");
+        log.info("조회된 결과 : {}", buyer);
     }
+
 }

@@ -21,27 +21,24 @@
                BUYER_FAX,
                BUYER_MAIL,
                BUYER_CHARGER,
-               BUYER_TELEXT,
+               BUYER_TELEXT
             FROM BUYER
     </select>
 
-    <select id="selectBuyer" resultMap="BuyerVO">
+    <resultMap type="BuyerVO" id="buyerMap" autoMapping="true">
+        <id property="buyerId" column="BUYER_ID"/>
+        <association property="lprod" javaType="LprodVO" autoMapping="true" />
+        <collection property="prodList" ofType="ProdVO" autoMapping="true" />
+    </resultMap>
+    <select id="selectBuyer" resultMap="buyerMap">
+        WITH V_BUYER  AS (
+            SELECT BUYER.*, LPROD.*
+            FROM BUYER INNER JOIN LPROD ON (BUYER_LGU = LPROD_GU)
+        )
         SELECT
-            BUYER_ID,
-            BUYER_NAME,
-            BUYER_LGU,
-            BUYER_BANK,
-            BUYER_BANKNO,
-            BUYER_BANKNAME,
-            BUYER_ZIP,
-            BUYER_ADD1,
-            BUYER_ADD2,
-            BUYER_COMTEL,
-            BUYER_FAX,
-            BUYER_MAIL,
-            BUYER_CHARGER,
-            BUYER_TELEXT,
-        FROM BUYER
+            V_BUYER.*
+             , PROD.*
+        FROM V_BUYER LEFT OUTER JOIN PROD ON (BUYER_ID = PROD_BUYER)
         WHERE BUYER_ID = #{buyerId}
     </select>
 

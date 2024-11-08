@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <form method="post" enctype="multipart/form-data">
     <table class="table">
         <tr>
@@ -36,7 +37,7 @@
         <tr>
             <th>주민번호1</th>
             <td>
-                <input type="text" name="memRegno1" class="form-control"
+                <input type="text" name="memRegno1" class="form-control" readonly
                        value="${member.memRegno1 }" />
                 <span class="text-danger">${errors.memRegno1 }</span>
             </td>
@@ -44,7 +45,7 @@
         <tr>
             <th>주민번호2</th>
             <td>
-                <input type="text" name="memRegno2" class="form-control"
+                <input type="text" name="memRegno2" class="form-control" readonly
                        value="${member.memRegno2 }" />
                 <span class="text-danger">${errors.memRegno2 }</span>
             </td>
@@ -52,7 +53,7 @@
         <tr>
             <th>생일</th>
             <td>
-                <input type="datetime-local" name="memBir" class="form-control"
+                <input type="date" name="memBir" class="form-control"
                        value="${member.memBir }" />
                 <span class="text-danger">${errors.memBir }</span>
             </td>
@@ -144,6 +145,10 @@
                        class="form-control" value="${member.memMemorialday }" />
                 <span class="text-danger">${errors.memMemorialday }</span>
             </td>
+        </tr>
+        <tr>
+            <th>마일리지</th>
+            <td>${member.memMileage }</td>
         </tr>
         <tr>
             <td colspan="2">

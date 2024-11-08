@@ -1,6 +1,5 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN" "http://tiles.apache.org/dtds/tiles-config_3_0.dtd" >
-
 <tiles-definitions>
     <definition name="abstractParent" template="/WEB-INF/views/themeLayout.jsp">
         <put-attribute name="preScript" value="/WEB-INF/includee/preScript.jsp" />
@@ -10,16 +9,23 @@
         <put-attribute name="footer" value="/WEB-INF/includee/footer.jsp" />
     </definition>
 
-    <definition name="index" extends="abstractParent">
-        <put-attribute name="content" value="/WEB-INF/views/index.jsp"></put-attribute>
+    <definition name="index"  extends="abstractParent">
+        <put-attribute name="content" value="/WEB-INF/views/index.jsp" />
     </definition>
-<!--    2 depth logical View-->
+    <!-- 	2 depth logical view name -->
     <definition name="*/*" extends="abstractParent">
         <put-attribute name="content" value="/WEB-INF/views/{1}/{2}.jsp" />
     </definition>
-
-    <!--    2 depth logical View-->
+    <!-- 	3 depth logical view name -->
     <definition name="*/*/*" extends="abstractParent">
         <put-attribute name="content" value="/WEB-INF/views/{1}/{2}/{3}.jsp" />
     </definition>
+
 </tiles-definitions>
+
+
+
+
+
+
+

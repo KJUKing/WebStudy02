@@ -41,5 +41,9 @@ class ProdMapperImplTest {
 
     @Test
     void updateProd() {
+        ProdVO prodVO = dao.selectProd("P101000007");
+        prodVO.setProdName("경주경주");
+        int i = dao.updateProd(prodVO);
+        assertEquals(i, 1);
     }
 }

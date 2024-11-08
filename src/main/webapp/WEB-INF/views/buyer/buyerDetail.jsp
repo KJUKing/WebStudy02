@@ -60,7 +60,7 @@
     <tr>
         <td colspan="1">
             <c:url var="updateUrl" value="/buyer/buyerUpdate.do">
-                <c:param name="buyerId" value="${buyer.buyerId }" />
+                <c:param name="prodId" value="${buyer.buyerId }" />
             </c:url>
             <a class="btn btn-primary" href="${updateUrl}">수정</a>
         </td>

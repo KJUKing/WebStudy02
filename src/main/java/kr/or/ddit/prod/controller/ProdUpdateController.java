@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
@@ -15,13 +14,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.Part;
 
-import kr.or.ddit.buyer.dao.BuyerMapper;
-import kr.or.ddit.buyer.dao.BuyerMapperImpl;
+import org.apache.commons.lang3.StringUtils;
+
 import kr.or.ddit.commons.enumpkg.ServiceResult;
-import kr.or.ddit.lprod.dao.LprodMapper;
-import kr.or.ddit.lprod.dao.LprodMapperImpl;
 import kr.or.ddit.mvc.ViewResolverComposite;
 import kr.or.ddit.mvc.multipart.MultipartFile;
 import kr.or.ddit.mvc.multipart.MultipartHttpServletRequest;
@@ -29,15 +25,13 @@ import kr.or.ddit.prod.service.ProdService;
 import kr.or.ddit.prod.service.ProdServiceImpl;
 import kr.or.ddit.utils.PopulateUtils;
 import kr.or.ddit.utils.ValidateUtils;
-import kr.or.ddit.validate.InsertGroup;
+import kr.or.ddit.validate.UpdateGroup;
 import kr.or.ddit.vo.ProdVO;
 
-@WebServlet("/prod/prodInsert.do")
+@WebServlet("/prod/prodUpdate.do")
 @MultipartConfig
-public class ProdInsertController extends HttpServlet{
+public class ProdUpdateController extends HttpServlet{
     private ProdService service = new ProdServiceImpl();
-    private LprodMapper lprodMapper = new LprodMapperImpl();
-    private BuyerMapper buyerMapper = new BuyerMapperImpl();
     private ServletContext application;
     private File saveFolder;
 
@@ -52,22 +46,22 @@ public class ProdInsertController extends HttpServlet{
         }
     }
 
-    private void addAttribute(HttpServletRequest req) {
-        req.setAttribute("lprodList", lprodMapper.selectLprodList());
-        req.setAttribute("buyerList", buyerMapper.selectBuyerList());
-    }
-
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        addAttribute(req);
-        String lvn = "prod/prodForm";
+        String prodId = req.getParameter("what");
+        if(StringUtils.isBlank(prodId)) {
+            resp.sendError(400, "필수 파라미터 누락");
+            return;
+        }
+
+        ProdVO prod = service.readProd(prodId);
+        req.setAttribute("prod", prod);
+        String lvn = "prod/prodEdit";
         new ViewResolverComposite().resolveView(lvn, req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        addAttribute(req);
-
         //		1. 요청 파라미터 획득
 //		2. ProdVO 에 파라미터 바인드
         ProdVO prod = new ProdVO();
@@ -82,14 +76,14 @@ public class ProdInsertController extends HttpServlet{
 //		3. 유효성 검증
         Map<String, List<String>> errors = new HashMap<>();
         req.setAttribute("errors", errors);
-        ValidateUtils.validate(prod, errors, InsertGroup.class);
+        ValidateUtils.validate(prod, errors, UpdateGroup.class);
 
         String lvn = null;
         if (errors.isEmpty()) {
 
 //		4. 통과
-//			1) 로직 실행(createprod)
-            ServiceResult result = service.createProd(prod);
+//			1) 로직 실행(modifyprod)
+            ServiceResult result = service.modifyProd(prod);
             switch (result) {
 //			2)  성공 : 상세 페이지로 이동(redirect) : PRG
                 case OK:
@@ -101,7 +95,7 @@ public class ProdInsertController extends HttpServlet{
 
 //				실패 : prodForm 이동(forward) (기존 입력 데이터와 알림 메시지 전달)
                 default:
-                    lvn = "prod/prodForm";
+                    lvn = "prod/prodEdit";
                     req.setAttribute("message", "서버 오류, 잠시 뒤 다시 가입해보셈.");
                     break;
             }
@@ -109,7 +103,7 @@ public class ProdInsertController extends HttpServlet{
         } else {
 //		5. 실패
 //		prodForm 이동(forward) (기존 입력 데이터와 검증 에러 메시지 전달)
-            lvn = "prod/prodForm";
+            lvn = "prod/prodEdit";
         }
 
         new ViewResolverComposite().resolveView(lvn, req, resp);
@@ -118,6 +112,8 @@ public class ProdInsertController extends HttpServlet{
     private void processProdImage(ProdVO prod) throws IOException {
 //		이미지 업로드 처리
         String saveName = prod.getProdImg();
+        if(StringUtils.isBlank(saveName)) return;
+
         File saveFile = new File(saveFolder, saveName);
         MultipartFile prodImage = prod.getProdImage();
         if(prodImage!=null)
@@ -125,13 +121,3 @@ public class ProdInsertController extends HttpServlet{
 
     }
 }
-
-
-
-
-
-
-
-
-
-

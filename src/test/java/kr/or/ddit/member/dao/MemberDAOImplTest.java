@@ -1,5 +1,6 @@
 package kr.or.ddit.member.dao;
 
+import kr.or.ddit.vo.BuyerVO;
 import kr.or.ddit.vo.MemberVO;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
@@ -18,13 +19,14 @@ class MemberDAOImplTest {
     @Test
     void insertMember() {
         MemberVO newMember = dao.selectMember("a001");
-        newMember.setMemId("a003");
+        newMember.setMemId("a006");
         assertEquals(1, dao.insertMember(newMember));
     }
 
     @Test
     void selectMember() {
-        assertNotNull(dao.selectMember("c001"));
+       assertNotNull(dao.selectMember("a001"));
+
     }
 
     @Test
@@ -42,6 +44,7 @@ class MemberDAOImplTest {
 
     @Test
     void update() {
+
     }
 
     @Test

@@ -66,7 +66,7 @@ public class BuyerUpdateController extends HttpServlet {
             switch (result) {
                 case OK:
                     // 수정 성공 시 상세 페이지로 리다이렉트
-                    lvn = "redirect:/buyer/buyerDetail.do?buyerId=" + buyer.getBuyerId();
+                    lvn = "redirect:/buyer/buyerDetail.do?what=" + buyer.getBuyerId();
                     break;
                 default:
                     // 수정 실패 시 에러 메시지와 함께 폼으로 포워딩

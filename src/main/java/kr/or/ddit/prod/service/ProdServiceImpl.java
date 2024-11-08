@@ -1,13 +1,12 @@
 package kr.or.ddit.prod.service;
 
+import java.util.List;
+
 import kr.or.ddit.commons.enumpkg.ServiceResult;
 import kr.or.ddit.commons.exception.PKNotFoundException;
 import kr.or.ddit.prod.dao.ProdMapper;
 import kr.or.ddit.prod.dao.ProdMapperImpl;
 import kr.or.ddit.vo.ProdVO;
-
-import java.util.List;
-import java.util.Optional;
 
 public class ProdServiceImpl implements ProdService {
 
@@ -20,8 +19,10 @@ public class ProdServiceImpl implements ProdService {
 
     @Override
     public ProdVO readProd(String prodId) throws PKNotFoundException {
-        return Optional.ofNullable(dao.selectProd(prodId))
-                .orElseThrow(() -> new PKNotFoundException(String.format("%s라는 상품명은 없는듯", prodId)));
+        ProdVO prod = dao.selectProd(prodId);
+        if(prod==null)
+            throw new PKNotFoundException(String.format("%s 상품 없음.", prodId));
+        return prod;
     }
 
     @Override
@@ -31,6 +32,18 @@ public class ProdServiceImpl implements ProdService {
 
     @Override
     public ServiceResult modifyProd(ProdVO prod) {
-        return null;
+        return dao.updateProd(prod) > 0 ? ServiceResult.OK : ServiceResult.FAIL;
     }
+
 }
+
+
+
+
+
+
+
+
+
+
+

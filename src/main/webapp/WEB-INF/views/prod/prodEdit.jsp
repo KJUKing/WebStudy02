@@ -4,6 +4,14 @@
 <form method="post" enctype="multipart/form-data">
     <table class="table table-bordered">
         <tr>
+            <th>상품코드</th>
+            <td>
+                <input type="text" name="prodId" class="form-control"
+                       required  readonly  value="${prod.prodId }" />
+                <span class="text-danger">${errors.prodId }</span>
+            </td>
+        </tr>
+        <tr>
             <th>상품명</th>
             <td>
                 <input type="text" name="prodName" class="form-control"
@@ -14,29 +22,20 @@
         <tr>
             <th>상품분류</th>
             <td>
-                <select name="prodLgu" class="form-select">
-                    <option value>분류선택</option>
-                    <c:forEach items="${lprodList }" var="lprod">
-                        <option label="${lprod.lprodNm }" value="${lprod.lprodGu }"
-                            ${lprod.lprodGu eq prod.prodLgu ? "selected" : "" }
-                        />
-                    </c:forEach>
-                </select>
+                <input type="hidden" name="prodLgu" value="${prod.prodLgu }" readonly
+                       class="form-control"
+                />
+                ${prod.lprod.lprodNm }
                 <span class="text-danger">${errors.prodLgu }</span>
             </td>
         </tr>
         <tr>
             <th>제조사</th>
             <td>
-                <select name="prodBuyer" class="form-select">
-                    <option value>제조사선택</option>
-                    <c:forEach items="${buyerList }" var="buyer">
-                        <option label="${buyer.buyerName }" value="${buyer.buyerId }"
-                            ${buyer.buyerId eq prod.prodBuyer ? "selected" : "" }
-                                class="${buyer.buyerLgu }"
-                        />
-                    </c:forEach>
-                </select>
+                <input type="hidden" name="prodBuyer" value="${prod.prodBuyer }" readonly
+                       class="form-control"
+                />
+                ${prod.buyer.buyerName }
                 <span class="text-danger">${errors.prodBuyer }</span>
             </td>
         </tr>
@@ -83,7 +82,8 @@
         <tr>
             <th>이미지</th>
             <td>
-                <input type="text" name="prodImage" class="form-control" required accept="image/*"/>
+                <img src="<c:url value='/resources/prodImages/${prod.prodImg }'/>"/>
+                <input type="file" name="prodImage" class="form-control" accept="image/*"/>
                 <span class="text-danger">${errors.prodImg }</span>
             </td>
         </tr>
