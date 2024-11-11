@@ -15,6 +15,7 @@ public class ViewResolverComposite implements ViewResolver {
     private List<ViewResolver> viewResolvers;
     {
         viewResolvers = new ArrayList<>();
+        viewResolvers.add(new ContentNegotiatingViewResolver());
         viewResolvers.add(new TilesViewResolver());
 
         viewResolvers.add(new InternalResourceViewResolver());
@@ -24,7 +25,7 @@ public class ViewResolverComposite implements ViewResolver {
     @Override
     public void resolveView(String lvn, HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        if (lvn.startsWith("redirect:")) {
+        if (lvn!= null && lvn.startsWith("redirect:")) {
             String location = lvn.replace("redirect:", req.getContextPath());
             resp.sendRedirect(location);
         } else {
