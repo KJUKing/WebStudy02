@@ -28,11 +28,24 @@ class MbtiFetch{
             throw new Error(`상태코드 : ${resp.status}`);
         }
     }
+
+    formDataToJson(formData){
+        let jsonObj = {};
+        for(let key of formData.keys()){
+            let value = formData.get(key);
+            jsonObj[key] = value;
+        }
+        return JSON.stringify(jsonObj);
+    }
+
     async insert(formData){
+        let headers = {...this.headers, "content-type":"application/json"};
+        //headers.accept = this.headers.accept;
+
         let resp = await fetch(this.baseURI, {
             method:"post",
-            headers:this.headers,
-            body : formData
+            headers:headers,
+            body : this.formDataToJson(formData)
         });
         if(resp.ok){
             return resp.json();
@@ -43,8 +56,11 @@ class MbtiFetch{
     async update(mtType, formData){
         let resp = await fetch(`${this.baseURI}/${mtType}`, {
             method:"put",
-            headers:this.headers,
-            body : formData
+            headers:{
+                ...this.headers
+                , "content-type" : "application/json"
+            },
+            body : this.formDataToJson(formData)
         });
         if(resp.ok){
             return resp.json();
@@ -75,7 +91,7 @@ document.addEventListener("DOMContentLoaded", async ()=>{
     let mbtiFetch = new MbtiFetch("../../mbti");
 
     select.addEventListener("dataload", async (e)=>{
-        let {mbtiList} = await mbtiFetch.selectList();
+        let mbtiList = await mbtiFetch.selectList();
         e.target.innerHTML = mbtiList.map(m=>`<option value="${m.mtType}">${m.mtTitle}</option>`)
             .join("\n");
     });
@@ -85,7 +101,7 @@ document.addEventListener("DOMContentLoaded", async ()=>{
 //		EDD(Event-Driven-Development)
     modelEl.addEventListener("show.bs.modal", async (e)=>{
         let mtType = e.relatedTarget.value;
-        let {mbti} = await mbtiFetch.selectOne(mtType);
+        let mbti = await mbtiFetch.selectOne(mtType);
 //		updateForm.mtType = mbti.mtType;
         for(let prop in mbti){
             if(updateForm[prop])
@@ -120,7 +136,7 @@ document.addEventListener("DOMContentLoaded", async ()=>{
     insertForm.addEventListener("submit", async (e)=>{
         e.preventDefault();
         let formData = new FormData(e.target);
-        let {mbti} = await mbtiFetch.insert(formData);
+        let mbti = await mbtiFetch.insert(formData);
         select.insertAdjacentHTML("beforeend", `<option value="${mbti.mtType}">${mbti.mtTitle}</option>`);
         insertForm.reset();
     });

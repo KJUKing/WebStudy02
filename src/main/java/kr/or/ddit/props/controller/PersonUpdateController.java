@@ -1,6 +1,6 @@
 package kr.or.ddit.props.controller;
 
-import kr.or.ddit.props.PersonVO;
+import kr.or.ddit.vo.PersonVO;
 import kr.or.ddit.props.service.PersonService;
 import kr.or.ddit.props.service.PersonServiceImpl;
 import org.apache.commons.beanutils.BeanUtils;

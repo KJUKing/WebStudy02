@@ -1,4 +1,4 @@
-package kr.or.ddit.props;
+package kr.or.ddit.vo;
 
 import kr.or.ddit.validate.DeleteGroup;
 import kr.or.ddit.validate.InsertGroup;

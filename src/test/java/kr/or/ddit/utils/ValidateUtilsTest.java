@@ -1,7 +1,7 @@
 package kr.or.ddit.utils;
 
 import kr.or.ddit.validate.InsertGroup;
-import kr.or.ddit.props.PersonVO;
+import kr.or.ddit.vo.PersonVO;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 

@@ -1,6 +1,6 @@
 package kr.or.ddit.props.dao;
 
-import kr.or.ddit.props.PersonVO;
+import kr.or.ddit.vo.PersonVO;
 
 import java.util.List;
 

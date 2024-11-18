@@ -2,7 +2,7 @@ package kr.or.ddit.props.dao;
 
 import kr.or.ddit.db.ConnectionFactory;
 import kr.or.ddit.db.ConnectionFactoryCP;
-import kr.or.ddit.props.PersonVO;
+import kr.or.ddit.vo.PersonVO;
 import org.apache.commons.text.WordUtils;
 
 import java.beans.PropertyDescriptor;

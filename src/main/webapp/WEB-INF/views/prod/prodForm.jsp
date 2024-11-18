@@ -75,8 +75,7 @@
         <tr>
             <th>상세정보</th>
             <td>
-                <input type="text" name="prodDetail" class="form-control"
-                       value="${prod.prodDetail }" />
+                <textarea name="prodDetail">${prod.prodDetail }</textarea>
                 <span class="text-danger">${errors.prodDetail }</span>
             </td>
         </tr>

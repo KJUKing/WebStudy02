@@ -7,7 +7,7 @@
         <!-- 		<setting name="jdbcTypeForNull" value="VARCHAR"/> -->
     </settings>
     <typeAliases>
-        <typeAlias type="kr.or.ddit.props.PersonVO" alias="PersonVO"/>
+        <typeAlias type="kr.or.ddit.vo.PersonVO" alias="PersonVO"/>
         <package name="kr.or.ddit.vo"/>
     </typeAliases>
     <environments default="dev">
